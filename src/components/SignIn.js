@@ -67,9 +67,6 @@ handleChange = event => {
   });
 }
 
-validateForm =() => {
-  return this.state.email.length > 0 && this.state.password.length > 0;
-}
 
 render() {
   const { classes } = this.props;
@@ -105,7 +102,7 @@ render() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={!this.validateForm()}>
+            >
             Sign in
           </Button>
         </form>
