@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+ 
 
 const styles = theme => ({
   main: {
@@ -45,8 +46,33 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes } = props;
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
+
+ handleSubmit = event => {
+  event.preventDefault();
+  alert("done")
+}
+
+handleChange = event => {
+  this.setState({
+    [event.target.id]: event.target.value
+  });
+}
+
+validateForm =() => {
+  return this.state.email.length > 0 && this.state.password.length > 0;
+}
+
+render() {
+  const { classes } = this.props;
 
   return (
     <main className={classes.main}>
@@ -58,14 +84,16 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={this.handleSubmit}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input id="email" name="email" autoComplete="email" autoFocus value={this.state.email}
+              onChange={this.handleChange}/>
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password" type="password" id="password" value={this.state.password}
+              onChange={this.handleChange} autoComplete="current-password" />
           </FormControl>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -77,13 +105,14 @@ function SignIn(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-          >
+            disabled={!this.validateForm()}>
             Sign in
           </Button>
         </form>
       </Paper>
     </main>
   );
+}
 }
 
 SignIn.propTypes = {
