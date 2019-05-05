@@ -47,8 +47,8 @@ const styles = theme => ({
 });
 
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       email: "",
@@ -58,7 +58,9 @@ class SignIn extends React.Component {
 
  handleSubmit = event => {
   event.preventDefault();
-  alert("done")
+  const { props } = this.props;
+  props.userHasAuthenticated(true);
+  this.props.history.push("/dashboard");
 }
 
 handleChange = event => {
